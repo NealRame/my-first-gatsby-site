@@ -1,4 +1,4 @@
-import { Link } from "gatsby"
+import { graphql, Link, useStaticQuery } from "gatsby"
 import * as React from "react"
 
 import {
@@ -7,27 +7,47 @@ import {
     navLinks,
     navLinkItem,
     navLinkText,
+    siteHeader,
+    sizeFooter,
 } from "./layout.module.css"
 
-export interface ILayoutData {
-    pageTitle: string
-    children: React.ReactNode
-}
-
-const Layout = ({ pageTitle, children }: ILayoutData) => (
+const Layout = ({ pageTitle, children }: ILayoutData) => {
+    const data = useStaticQuery(graphql`
+        query {
+            site {
+                buildTime
+                siteMetadata {
+                    title
+                }
+            }
+        }
+    `)
+    const builtTimeString = (new Date(data.site.buildTime)).toLocaleString()
+    return (
     <div className={ container }>
-        <title>{ pageTitle }</title>
+        <title>{ pageTitle } | { data.site.siteMetadata.title }</title>
+        <header className={ siteHeader }>{ data.site.siteMetadata.title }</header>
         <nav>
             <ul className={ navLinks }>
-                <li className={ navLinkItem }><Link className={ navLinkText } to="/">Home</Link></li>
-                <li><Link to="/about/">About</Link></li>
+                <li className={ navLinkItem }>
+                    <Link className={ navLinkText } to="/">Home</Link>
+                </li>
+                <li className={ navLinkItem }>
+                    <Link className={ navLinkText } to="/about/">About</Link>
+                </li>
+                <li className={ navLinkItem }>
+                    <Link className={ navLinkText } to="/blog">Blog</Link>
+                </li>
             </ul>
         </nav>
         <main>
             <h1 className={ heading }>{ pageTitle }</h1>
             { children }
         </main>
-    </div>
-)
+        <footer className={ sizeFooter }>
+            Generated on <em>{ builtTimeString }</em>
+        </footer>
+    </div>)
+}
 
 export default Layout

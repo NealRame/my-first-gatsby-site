@@ -4,6 +4,20 @@
     font-family: sans-serif;
 }
 
+.site-header {
+    font-size: 3rem;
+    color: gray;
+    font-weight: 700;
+    margin: 3rem 0;
+}
+
+.size-footer {
+    border-top: 1px solid gray;
+    color: gray;
+    font-size: .75rem;
+    margin: 2rem 0;
+}
+
 .heading {
     color: rebeccapurple;
 }
