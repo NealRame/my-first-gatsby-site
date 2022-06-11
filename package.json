@@ -15,8 +15,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "@parcel/namer-default": "^2.6.0",
     "gatsby": "^4.16.0",
     "gatsby-plugin-image": "^2.16.1",
+    "gatsby-plugin-mdx": "^3.16.1",
     "gatsby-plugin-sharp": "^4.16.1",
     "gatsby-source-filesystem": "^4.16.0",
     "react": "^18.1.0",

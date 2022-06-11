@@ -5,11 +5,16 @@ interface ILayoutData {
 }
 
 interface IBlogPostData {
-    name: string
+    frontmatter: {
+        date: string
+        title: string
+    }
+    id: string
+    body: string
 }
 interface IBlogPostsQueryData {
     data: {
-        allFile: {
+        allMdx: {
             nodes: Array<IBlogPostData>
         }
     }
