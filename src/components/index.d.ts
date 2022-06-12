@@ -4,18 +4,30 @@ interface ILayoutData {
     children: React.ReactNode
 }
 
-interface IBlogPostData {
+interface IBlogPostEntryData {
     frontmatter: {
         date: string
         title: string
     }
     id: string
-    body: string
+    slug: string
 }
 interface IBlogPostsQueryData {
     data: {
         allMdx: {
-            nodes: Array<IBlogPostData>
+            nodes: Array<IBlogPostEntryData>
+        }
+    }
+}
+
+interface IBlogPostQueryData {
+    data: {
+        mdx: {
+            frontmatter: {
+                date: string
+                title: string
+            }
+            body: string
         }
     }
 }
