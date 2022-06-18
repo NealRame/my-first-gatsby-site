@@ -1,0 +1,41 @@
+.square {
+    background-color: azure;
+
+    border: none;
+
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 4rem;
+
+    padding: 0;
+    margin: 0;
+
+    text-align: center;
+}
+
+.square:focus {
+    outline: none;
+}
+
+.grid {
+    background-color: #999;
+    border: 1px solid #666;
+
+    display: grid;
+
+    gap: 1px;
+
+    grid-template-rows: repeat(3, 4rem);
+    grid-template-columns: repeat(3, 4rem);
+
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

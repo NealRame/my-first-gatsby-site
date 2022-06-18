@@ -1,4 +1,5 @@
 declare module "*.css"
+
 interface ILayoutData {
     pageTitle: string
     children: React.ReactNode
@@ -30,4 +31,8 @@ interface IBlogPostQueryData {
             body: string
         }
     }
+}
+
+interface IShoppingListData {
+    name: string
 }
