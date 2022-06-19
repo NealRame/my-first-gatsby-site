@@ -1,0 +1,13 @@
+.clock {
+    display: grid;
+    gap: .25rem;
+    grid-template-rows: auto min-content auto;
+    justify-items: center;
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+}
+
+.clock > h2 {
+    margin: 0;
+    padding: 0;
+}
