@@ -3,7 +3,7 @@ import * as React from "react"
 import {
     type IBoardSquareData,
     type IBoardState,
-    type ISquareValue,
+    type IBoardSquareValue,
 } from "./types"
 
 import {
@@ -21,7 +21,7 @@ function Square({ value, onClick }: IBoardSquareData) {
 }
 
 function Board() {
-    const [ turn, setTurn ] = React.useState<ISquareValue>("X")
+    const [ turn, setTurn ] = React.useState<IBoardSquareValue>("X")
     const [ squares, setSquares ] = React.useState<IBoardState>([
         null, null, null,
         null, null, null,
