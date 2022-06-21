@@ -1,3 +1,4 @@
+import { cp } from "fs/promises"
 import * as React from "react"
 
 import {
@@ -8,109 +9,89 @@ type AnalogClockProps = {
     date: Date
 }
 
-class AnalogClock extends React.Component<AnalogClockProps> {
-    private ref_: React.RefObject<HTMLCanvasElement>
+function AnalogClock({ date }: AnalogClockProps) {
+    const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
-    constructor(props: AnalogClockProps) {
-        super(props)
-        this.ref_ = React.createRef()
-    }
-
-    drawHrs(
-        ctx: CanvasRenderingContext2D,
-        centerX: number,
-        centerY: number,
-        radius: number,
-    ) {
+    const drawHrs = (ctx: CanvasRenderingContext2D, x: number, y: number, r: number) => {
         for (let i = 0; i < 12; i++) {
             const angle = i*Math.PI/6
             ctx.beginPath()
             ctx.moveTo(
-                centerX + Math.cos(angle)*radius*.7,
-                centerY + Math.sin(angle)*radius*.7,
+                x + .7*r*Math.cos(angle),
+                y + .7*r*Math.sin(angle),
             )
             ctx.lineTo(
-                centerX + Math.cos(angle)*radius*.9,
-                centerY + Math.sin(angle)*radius*.9,
+                x + .9*r*Math.cos(angle),
+                y + .9*r*Math.sin(angle),
             )
             ctx.strokeStyle = "black"
             ctx.stroke()
             ctx.closePath()
         }
 
-        const hours = this.props.date.getHours()
-        const minutes = this.props.date.getMinutes()
+        const hours = date.getHours()
+        const minutes = date.getMinutes()
         const hoursAngle = (30*hours + minutes/2 - 90)*Math.PI/180
         ctx.beginPath()
-        ctx.moveTo(centerX, centerY)
+        ctx.moveTo(x, y)
         ctx.lineTo(
-            centerX + radius*Math.cos(hoursAngle)*.4,
-            centerY + radius*Math.sin(hoursAngle)*.4,
+            x + .4*r*Math.cos(hoursAngle),
+            y + .4*r*Math.sin(hoursAngle),
         )
         ctx.strokeStyle = "black"
         ctx.stroke()
         ctx.closePath()
     }
 
-    drawMin(
-        ctx: CanvasRenderingContext2D,
-        centerX: number,
-        centerY: number,
-        radius: number,
-    ) {
+    const drawMin = (ctx: CanvasRenderingContext2D, x: number, y: number, r: number) => {
         for (let i = 0; i < 60; i++) {
             const angle = i*Math.PI/30
             ctx.beginPath()
             ctx.moveTo(
-                centerX + Math.cos(angle)*radius*.8,
-                centerY + Math.sin(angle)*radius*.8,
+                x + .8*r*Math.cos(angle),
+                y + .8*r*Math.sin(angle),
             )
             ctx.lineTo(
-                centerX + Math.cos(angle)*radius*.9,
-                centerY + Math.sin(angle)*radius*.9,
+                x + .9*r*Math.cos(angle),
+                y + .9*r*Math.sin(angle),
             )
             ctx.strokeStyle = "black"
             ctx.stroke()
             ctx.closePath()
         }
 
-        const minutes = this.props.date.getMinutes()
+        const minutes = date.getMinutes()
         const minuteAngle = (6*minutes - 90)*Math.PI/180
         ctx.beginPath()
-        ctx.moveTo(centerX, centerY)
+        ctx.moveTo(x, y)
         ctx.lineTo(
-            centerX + radius*Math.cos(minuteAngle)*.7,
-            centerY + radius*Math.sin(minuteAngle)*.7,
+            x + .7*r*Math.cos(minuteAngle),
+            y + .7*r*Math.sin(minuteAngle),
         )
         ctx.strokeStyle = "black"
         ctx.stroke()
         ctx.closePath()
     }
 
-    drawSec(
-        ctx: CanvasRenderingContext2D,
-        centerX: number,
-        centerY: number,
-        radius: number,
-    ) {
-        const seconds = this.props.date.getSeconds()
+    const drawSec = (ctx: CanvasRenderingContext2D, x: number, y: number, r: number) => {
+        const seconds = date.getSeconds()
         const secondAngle = (6*seconds - 90)*Math.PI/180
         ctx.beginPath()
-        ctx.moveTo(centerX, centerY)
+        ctx.moveTo(x, y)
         ctx.lineTo(
-            centerX + radius*Math.cos(secondAngle)*.7,
-            centerY + radius*Math.sin(secondAngle)*.7,
+            x + .7*r*Math.cos(secondAngle),
+            y + .7*r*Math.sin(secondAngle),
         )
         ctx.strokeStyle = "red"
         ctx.stroke()
         ctx.closePath()
     }
 
-    componentDidUpdate() {
-        const canvas = this.ref_.current as HTMLCanvasElement
-        const ctx = canvas.getContext("2d")
+    React.useEffect(() => {
+        const ctx = canvasRef.current?.getContext("2d")
         if (ctx) {
-            const { width, height } = canvas
+            const { width, height } = ctx.canvas
+
             const centerX = width/2
             const centerY = height/2
             const radius = height/2
@@ -129,9 +110,9 @@ class AnalogClock extends React.Component<AnalogClockProps> {
             ctx.fill()
             ctx.closePath()
 
-            this.drawHrs(ctx, centerX, centerY, radius)
-            this.drawMin(ctx, centerX, centerY, radius)
-            this.drawSec(ctx, centerX, centerY, radius)
+            drawHrs(ctx, centerX, centerY, radius)
+            drawMin(ctx, centerX, centerY, radius)
+            drawSec(ctx, centerX, centerY, radius)
 
             ctx.beginPath()
             ctx.arc(centerX, centerY, 2, 0, 360)
@@ -139,15 +120,11 @@ class AnalogClock extends React.Component<AnalogClockProps> {
             ctx.fill()
             ctx.closePath()
         }
-    }
+    })
 
-    render() {
-        return <canvas
-            ref={this.ref_}
-            width="64"
-            height="64"
-        />
-    }
+    return (
+        <canvas ref={canvasRef} width="64" height="64"/>
+    )
 }
 
 type ClockProps = {
@@ -155,45 +132,24 @@ type ClockProps = {
     offset: number,
 }
 
-type ClockState = {
-    date: Date
-}
+function Clock({ city, offset }: ClockProps) {
+    const [date, setDate] = React.useState(new Date())
 
-class Clock extends React.Component<ClockProps, ClockState> {
-    private timerID_: ReturnType<typeof setInterval> | null = null
+    React.useEffect(() => {
+        const timerID = setInterval(() => {
+            const d = new Date()
+            setDate(new Date(d.getTime() + (d.getTimezoneOffset()*6 + offset*360)*10000))
+        }, 1000)
+        return () => clearInterval(timerID)
+    }, [])
 
-    constructor(props: ClockProps) {
-        super(props)
-        this.state = {
-            date: new Date()
-        }
-    }
-
-    private tick_() {
-        const d = new Date()
-        const t = d.getTime() + d.getTimezoneOffset()*60000 + this.props.offset*3600000
-        this.setState({
-            date: new Date(t)
-        })
-    }
-
-    componentDidMount() {
-        this.timerID_ = setInterval(() => this.tick_(), 1000)
-    }
-
-    componentWillUnmount() {
-        if (this.timerID_) {
-            clearInterval(this.timerID_)
-        }
-    }
-
-    render() {
-        return <div className={clock}>
-            <h2>{this.props.city}</h2>
-            <AnalogClock date={this.state.date} />
-            <span>{this.state.date.toLocaleDateString()}</span>
+    return (
+        <div className={clock}>
+            <h2>{city}</h2>
+            <AnalogClock date={date} />
+            <span>{date.toLocaleDateString()}</span>
         </div>
-    }
+    )
 }
 
 export default Clock
