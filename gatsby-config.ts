@@ -2,7 +2,7 @@ import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "My First Gatsby Site",
+    title: "Neal.Rame.",
   },
   plugins: [
     "gatsby-plugin-image",
