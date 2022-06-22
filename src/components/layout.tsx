@@ -1,15 +1,12 @@
 import { graphql, Link, useStaticQuery } from "gatsby"
 import * as React from "react"
 
+import "../style/global.scss";
+
 import {
-    container,
+    content,
     heading,
-    navLinks,
-    navLinkItem,
-    navLinkText,
-    siteHeader,
-    sizeFooter,
-} from "./layout.module.css"
+} from "./layout.module.scss"
 
 const Layout = ({ pageTitle, children }: ILayoutData) => {
     const data = useStaticQuery(graphql`
@@ -24,27 +21,28 @@ const Layout = ({ pageTitle, children }: ILayoutData) => {
     `)
     const builtTimeString = (new Date(data.site.buildTime)).toLocaleString()
     return (
-    <div className={ container }>
-        <title>{ pageTitle } | { data.site.siteMetadata.title }</title>
-        <header className={ siteHeader }>{ data.site.siteMetadata.title }</header>
-        <nav>
-            <ul className={ navLinks }>
-                <li className={ navLinkItem }>
-                    <Link className={ navLinkText } to="/">Home</Link>
-                </li>
-                <li className={ navLinkItem }>
-                    <Link className={ navLinkText } to="/about/">About</Link>
-                </li>
-                <li className={ navLinkItem }>
-                    <Link className={ navLinkText } to="/blog">Blog</Link>
-                </li>
-            </ul>
-        </nav>
+    <div id={ content }>
+        <header>
+            <h1>{ data.site.siteMetadata.title }</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/about/">About</Link>
+                    </li>
+                    <li>
+                        <Link to="/blog">Blog</Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <main>
-            <h1 className={ heading }>{ pageTitle }</h1>
+            <h1>{ pageTitle }</h1>
             { children }
         </main>
-        <footer className={ sizeFooter }>
+        <footer>
             Generated on <em>{ builtTimeString }</em>
         </footer>
     </div>)

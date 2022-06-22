@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+html {
+    font-size: 18px;
+
+    @media screen and (min-width: 768px) {
+        font-size: 21px;
+    }
+}
+
+body {
+    background-color: darken($color: $background-color, $amount: 10%);
+
+    color: $foreground-color;
+
+    font-family: "Rokkitt", serif;
+    font-weight: 300;
+
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $header-color;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+}

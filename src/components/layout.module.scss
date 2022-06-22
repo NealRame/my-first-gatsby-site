@@ -1,0 +1,87 @@
+@import "../style/variables.scss";
+
+#content {
+    background-color: $background-color;
+
+    display: grid;
+
+    grid-template-rows: auto 100fr auto;
+
+    overflow: hidden;
+
+    margin: auto;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100vh;
+
+    @media screen and (min-width: 768px) {
+        width: 768px;
+    }
+
+    @media screen and (min-width: 1024px) {
+        width: 960px;
+    }
+
+    & > header {
+        & > h1 {
+            color: $color2;
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+        }
+        & > nav {
+            font-family: "Montserrat";
+            ul {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+                justify-content: center;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+
+    & > main {
+        padding: 0.5rem;
+
+        @media screen and (min-width: 768px) {
+            padding: 1rem;
+        }
+    
+        @media screen and (min-width: 1024px) {
+            padding: 1.5rem;
+        }
+    }
+
+    & > footer {
+        border-top: 1px solid $border-color;
+
+        color: $color2;
+
+        font-size: .75rem;
+
+        padding: 1rem;
+        padding-top: .25rem;
+    }
+}
+
+.heading {
+    color: $color2;
+    font-family: "Montserrat", sans-serif;
+}
+
+// .nav-links {
+//     display: flex;
+//     list-style: none;
+//     padding-left: 0;
+// }
+
+// .nav-link-item {
+//     padding-right: 2rem;
+// }
+
+// .nav-link-text {
+//     color: black;
+// }

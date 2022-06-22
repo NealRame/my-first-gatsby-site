@@ -1,4 +1,5 @@
 declare module "*.css"
+declare module "*.scss"
 
 interface ILayoutData {
     pageTitle: string
