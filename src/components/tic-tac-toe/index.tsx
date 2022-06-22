@@ -1,9 +1,9 @@
 import * as React from "react"
 
-import {
-    type IBoardSquareData,
-    type IBoardState,
-    type IBoardSquareValue,
+import type {
+    IBoardSquareData,
+    IBoardState,
+    IBoardSquareValue,
 } from "./types"
 
 import {
