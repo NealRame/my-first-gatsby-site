@@ -20,15 +20,18 @@
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@parcel/namer-default": "^2.6.0",
+    "@types/react-helmet": "^6.1.5",
     "gatsby": "^4.16.0",
     "gatsby-plugin-image": "^2.16.1",
     "gatsby-plugin-mdx": "^3.16.1",
+    "gatsby-plugin-react-helmet": "^5.17.0",
     "gatsby-plugin-sass": "^5.17.0",
     "gatsby-plugin-sharp": "^4.16.1",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-filesystem": "^4.16.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-helmet": "^6.1.0",
     "sass": "^1.52.3"
   },
   "devDependencies": {

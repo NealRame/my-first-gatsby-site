@@ -1,4 +1,5 @@
 import { graphql, Link, useStaticQuery } from "gatsby"
+import { Helmet } from "react-helmet"
 import * as React from "react"
 
 import "../style/global.scss";
@@ -22,6 +23,9 @@ const Layout = ({ pageTitle, children }: ILayoutData) => {
     const builtTimeString = (new Date(data.site.buildTime)).toLocaleString()
     return (
     <div id={ content }>
+        <Helmet>
+            <title>{ `${data.site.siteMetadata.title} - ${pageTitle}` }</title>
+        </Helmet>
         <header>
             <h1>{ data.site.siteMetadata.title }</h1>
             <nav>

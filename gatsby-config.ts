@@ -6,6 +6,8 @@ const config: GatsbyConfig = {
   },
   plugins: [
     "gatsby-plugin-image",
+    "gatsby-plugin-mdx",
+    "gatsby-plugin-react-helmet",
     "gatsby-plugin-sass",
     "gatsby-plugin-sharp",
     {
@@ -15,7 +17,6 @@ const config: GatsbyConfig = {
         path: `${__dirname}/src/blog`,
       }
     },
-    "gatsby-plugin-mdx",
   ],
 }
 
