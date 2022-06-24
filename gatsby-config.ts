@@ -1,4 +1,7 @@
 import type { GatsbyConfig } from "gatsby"
+import * as dotenv from "dotenv"
+
+dotenv.config()
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -10,6 +13,14 @@ const config: GatsbyConfig = {
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sass",
     "gatsby-plugin-sharp",
+    {
+      resolve: "gatsby-plugin-web-font-loader",
+      options: {
+        typekit: {
+          id: process.env.TYPEKIT_ID,
+        }
+      }
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {

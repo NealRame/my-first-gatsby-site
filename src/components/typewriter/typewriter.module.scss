@@ -1,0 +1,20 @@
+@import "../../style/variables.scss";
+
+@keyframes blink {
+    50% {
+      opacity: 0;
+    }
+}
+
+.typewriter {
+    font-family: lores-12, sans-serif;
+
+    text-shadow:
+        0 0 2px $foreground-color,
+        0 0 12px $foreground-color;
+
+    &::after {
+        animation: blink 1s step-start 0s infinite;
+        content: "\268A";
+    }
+}
