@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-color: darken($color: $background-color, $amount: 10%);
+    background-color: $background-color;
 
     color: $foreground-color;
 

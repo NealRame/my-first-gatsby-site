@@ -6,15 +6,29 @@
     }
 }
 
+$color: $foreground-color;
+
 .typewriter {
-    font-family: lores-12, sans-serif;
+    width: 100%;
+    height: 100%;
 
-    text-shadow:
-        0 0 2px $foreground-color,
-        0 0 12px $foreground-color;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
-    &::after {
-        animation: blink 1s step-start 0s infinite;
-        content: "\268A";
+    .typewriter-line {
+        color: $color;
+
+        font-family: lores-12, sans-serif;
+
+        text-shadow:
+            0 0 2px $color,
+            0 0 12px $color;
+
+        &::after {
+            animation: blink 1s step-start 0s infinite;
+            content: "\268A";
+        }
     }
 }

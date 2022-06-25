@@ -2,7 +2,8 @@ import * as React from "react"
 
 import {
     typewriter,
-} from "./typewriter.module.scss";
+    typewriterLine,
+} from "./typewriter.module.scss"
 
 type ITypewriterProps = {
     text: string
@@ -21,7 +22,11 @@ const Typewriter = ({ text, interval }: ITypewriterProps) => {
         return () => clearTimeout(timerId)
     })
 
-    return (<span className={ typewriter }>{ currentText }</span>)
+    return (
+        <div className={ typewriter }>
+            <span className={ typewriterLine }>{ currentText }</span>
+        </div>
+    )
 }
 
 export default Typewriter
