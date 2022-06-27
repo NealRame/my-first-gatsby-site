@@ -19,33 +19,37 @@ import "../style/global.scss"
 
 
 type INavigationBarProps = {
-    title: string
     onShowMenuClicked: () => void
     onShowContactClicked: () => void
+    title: string
 }
 
 const NavigationBar = ({
-    title,
     onShowMenuClicked,
     onShowContactClicked,
+    title,
 }: INavigationBarProps) => {
     return <div className={ navbar }>
         <button onClick={ onShowMenuClicked }>
             <FontAwesomeIcon icon={ faBars } size="2x"/>
         </button>
         <h1>{ title }</h1>
-        <button>
+        <button onClick={ onShowContactClicked }>
             <FontAwesomeIcon icon={ faEnvelope } size="2x"/>
         </button>
     </div>
 }
 
 type INavigationProps = {
+    onHideMenuClicked: () => void
     show: boolean
 }
 
-const Navigation = ({ show }: INavigationProps) => {
+const Navigation = ({ show, onHideMenuClicked }: INavigationProps) => {
     return <nav className={ `${show ? active : undefined}` }>
+        <button onClick={ onHideMenuClicked }>
+            <FontAwesomeIcon icon={ faTimes } size="2x"/>
+        </button>
         <ul>
             <li>
                 <Link to="/">Home</Link>
@@ -79,11 +83,14 @@ const Layout = ({ pageTitle, children }: ILayoutData) => {
             <title>{ `${data.site.siteMetadata.title} - ${pageTitle}` }</title>
         </Helmet>
         <header>
-            <Navigation show={ show }/>
+            <Navigation
+                onHideMenuClicked={ () => setShow(false) }
+                show={ show }
+            />
             <NavigationBar
                 onShowContactClicked={ () => setShow(true) }
                 onShowMenuClicked={ () => setShow(true) }
-                title={data.site.siteMetadata.title}
+                title={ data.site.siteMetadata.title }
             />
         </header>
         <main>
