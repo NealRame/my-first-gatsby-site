@@ -16,22 +16,30 @@
     min-height: 100vh;
 
     & > header {
-        & > button {
-            background-color: transparent;
-            border: none;
+        & > .navbar {
+            display: flex;
+            align-items: center;
 
-            color: $color3;
-        }
-        & > h1 {
-            display: inline;
+            & > button {
+                background-color: transparent;
+                border: none;
 
-            font-family: lores-9-wide, sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
+                color: $color3;
 
-            margin: 0 auto;
+                margin: 0 1ch;
+                padding: 0;
+            }
+            & > h1 {
+                display: inline;
 
-            text-align: right;
+                font-family: lores-9-wide, sans-serif;
+                font-size: 2rem;
+                font-weight: 900;
+
+                margin: 0 auto;
+
+                text-align: right;
+            }
         }
         & > nav {
             font-family: lores-12, sans-serif;
