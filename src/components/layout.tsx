@@ -1,13 +1,14 @@
 import { graphql, Link, useStaticQuery } from "gatsby"
 import { Helmet } from "react-helmet"
+
+import * as React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import {
     faBars,
     faEnvelope,
-    faTimes,
+    faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-
-import * as React from "react"
 
 import {
     active,
@@ -19,37 +20,42 @@ import "../style/global.scss"
 
 
 type INavigationBarProps = {
-    onShowMenuClicked: () => void
-    onShowContactClicked: () => void
+    onToggleMenuClicked: () => void
+    onToggleContactClicked: () => void
+    active: boolean
     title: string
 }
 
 const NavigationBar = ({
-    onShowMenuClicked,
-    onShowContactClicked,
+    onToggleMenuClicked,
+    onToggleContactClicked,
+    active,
     title,
 }: INavigationBarProps) => {
     return <div className={ navbar }>
-        <button onClick={ onShowMenuClicked }>
-            <FontAwesomeIcon icon={ faBars } size="2x"/>
+        <button onClick={ onToggleMenuClicked }>
+            <FontAwesomeIcon icon={ active ? faXmark : faBars } size="2x" fixedWidth/>
         </button>
         <h1>{ title }</h1>
-        <button onClick={ onShowContactClicked }>
-            <FontAwesomeIcon icon={ faEnvelope } size="2x"/>
+        <button onClick={ onToggleContactClicked }>
+            <FontAwesomeIcon icon={ faEnvelope } size="2x" fixedWidth/>
         </button>
     </div>
 }
 
 type INavigationProps = {
-    onHideMenuClicked: () => void
-    show: boolean
+    title: string
 }
 
-const Navigation = ({ show, onHideMenuClicked }: INavigationProps) => {
-    return <nav className={ `${show ? active : undefined}` }>
-        <button onClick={ onHideMenuClicked }>
-            <FontAwesomeIcon icon={ faTimes } size="2x"/>
-        </button>
+const Navigation = ({ title }: INavigationProps) => {
+    const [ isOpened, setIsOpened] = React.useState(false)
+    return <nav className={ `${isOpened ? active : ""}` }>
+        <NavigationBar
+            active={ isOpened }
+            title={ title }
+            onToggleMenuClicked={ () => setIsOpened(!isOpened) }
+            onToggleContactClicked={ () => {} }
+        />
         <ul>
             <li>
                 <Link to="/">Home</Link>
@@ -65,7 +71,6 @@ const Navigation = ({ show, onHideMenuClicked }: INavigationProps) => {
 }
 
 const Layout = ({ pageTitle, children }: ILayoutData) => {
-    const [show, setShow] = React.useState(false)
     const data = useStaticQuery(graphql`
         query {
             site {
@@ -83,15 +88,7 @@ const Layout = ({ pageTitle, children }: ILayoutData) => {
             <title>{ `${data.site.siteMetadata.title} - ${pageTitle}` }</title>
         </Helmet>
         <header>
-            <Navigation
-                onHideMenuClicked={ () => setShow(false) }
-                show={ show }
-            />
-            <NavigationBar
-                onShowContactClicked={ () => setShow(true) }
-                onShowMenuClicked={ () => setShow(true) }
-                title={ data.site.siteMetadata.title }
-            />
+            <Navigation title={ data.site.siteMetadata.title }/>
         </header>
         <main>
             { children }
