@@ -11,9 +11,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
+    faGithubAlt,
+    faTwitter,
+} from "@fortawesome/free-brands-svg-icons"
+
+import {
     active,
     content,
     navbar,
+    navlinks,
+    siteLinks,
+    socialLinks,
 } from "./layout.module.scss"
 
 import "../style/global.scss"
@@ -22,24 +30,37 @@ import "../style/global.scss"
 type INavigationBarProps = {
     onToggleMenuClicked: () => void
     onToggleContactClicked: () => void
-    active: boolean
     title: string
 }
 
 const NavigationBar = ({
     onToggleMenuClicked,
     onToggleContactClicked,
-    active,
     title,
 }: INavigationBarProps) => {
     return <div className={ navbar }>
         <button onClick={ onToggleMenuClicked }>
-            <FontAwesomeIcon icon={ active ? faXmark : faBars } size="2x" fixedWidth/>
+            <FontAwesomeIcon icon={ faBars } size="2x" fixedWidth/>
         </button>
         <h1>{ title }</h1>
         <button onClick={ onToggleContactClicked }>
             <FontAwesomeIcon icon={ faEnvelope } size="2x" fixedWidth/>
         </button>
+    </div>
+}
+
+type INavigationListProps = {
+    children: React.ReactNode
+    isOpened: boolean
+    onCloseClicked: () => void
+}
+
+const NavigationList = ({ isOpened, children, onCloseClicked }: INavigationListProps) => {
+    return <div className={[navlinks, isOpened ? active : ""].join(" ")}>
+        <button onClick={ onCloseClicked }>
+            <FontAwesomeIcon icon={ faXmark } size="3x" fixedWidth/>
+        </button>
+        { children }
     </div>
 }
 
@@ -49,24 +70,49 @@ type INavigationProps = {
 
 const Navigation = ({ title }: INavigationProps) => {
     const [ isOpened, setIsOpened] = React.useState(false)
+
+    const [siteLinksActive, setSiteLinksActive] = React.useState(false)
+    const [socialLinksActive, setSocialLinksActive] = React.useState(false)
+
     return <nav className={ `${isOpened ? active : ""}` }>
         <NavigationBar
-            active={ isOpened }
             title={ title }
-            onToggleMenuClicked={ () => setIsOpened(!isOpened) }
-            onToggleContactClicked={ () => {} }
+            onToggleMenuClicked={ () => setSiteLinksActive(true) }
+            onToggleContactClicked={ () => setSocialLinksActive(true) }
         />
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-            <li>
-                <Link to="/about/">About Me</Link>
-            </li>
-            <li>
-                <Link to="/blog">Blog</Link>
-            </li>
-        </ul>
+
+        <NavigationList
+            isOpened={ siteLinksActive }
+            onCloseClicked={ () => setSiteLinksActive(false) }>
+            <ul id={ siteLinks }>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/about/">About Me</Link>
+                </li>
+                <li>
+                    <Link to="/blog">Blog</Link>
+                </li>
+            </ul>
+        </NavigationList>
+
+        <NavigationList
+            isOpened={ socialLinksActive }
+            onCloseClicked={ () => setSocialLinksActive(false) }>
+            <ul id={ socialLinks }>
+                <li>
+                    <a href="https://github.com/NealRame" target="_blank">
+                        <FontAwesomeIcon icon={ faGithubAlt } fixedWidth/>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/NealRame" target="_blank">
+                        <FontAwesomeIcon icon={ faTwitter } fixedWidth/>
+                    </a>
+                </li>
+            </ul>
+        </NavigationList>
     </nav>
 }
 
