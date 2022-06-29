@@ -6,7 +6,7 @@
     }
 }
 
-$color: $foreground-color;
+$color: #aff1fe;
 
 .typewriter {
     width: 100%;
@@ -18,13 +18,13 @@ $color: $foreground-color;
     justify-content: center;
 
     .typewriter-line {
-        color: $color;
+        color: lighten($color: $color, $amount: 5);
 
         font-family: lores-12, sans-serif;
 
         text-shadow:
             0 0 2px $color,
-            0 0 12px $color;
+            0 0 12px darken($color: $color, $amount: 25);
 
         &::after {
             animation: blink 1s step-start 0s infinite;

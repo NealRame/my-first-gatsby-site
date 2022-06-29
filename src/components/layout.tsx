@@ -142,31 +142,27 @@ const Navigation = ({ title }: INavigationProps) => {
 }
 
 const Layout = ({ pageTitle, children }: ILayoutData) => {
-    const data = useStaticQuery(graphql`
+    const { site: { siteMetadata: { title } }} = useStaticQuery(graphql`
         query {
             site {
-                buildTime
                 siteMetadata {
                     title
                 }
             }
         }
     `)
-    const builtTimeString = (new Date(data.site.buildTime)).toLocaleString()
+
     return (
     <div id={ content }>
         <Helmet>
-            <title>{ `${data.site.siteMetadata.title} - ${pageTitle}` }</title>
+            <title>{ `${title} - ${pageTitle}` }</title>
         </Helmet>
         <header>
-            <Navigation title={ data.site.siteMetadata.title }/>
+            <Navigation title={ title }/>
         </header>
         <main>
             { children }
         </main>
-        <footer>
-            Generated on <em>{ builtTimeString }</em>
-        </footer>
     </div>)
 }
 
