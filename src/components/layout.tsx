@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
     faBars,
     faEnvelope,
+    faTimes,
     faXmark,
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -28,23 +29,29 @@ import "../style/global.scss"
 
 
 type INavigationBarProps = {
-    onToggleMenuClicked: () => void
+    contactIsOpened: boolean
     onToggleContactClicked: () => void
-    title: string
+
+    menuIsOpened: boolean
+    onToggleMenuClicked: () => void
+
+    children: React.ReactNode
 }
 
 const NavigationBar = ({
+    menuIsOpened,
     onToggleMenuClicked,
+    contactIsOpened,
     onToggleContactClicked,
-    title,
+    children,
 }: INavigationBarProps) => {
     return <div className={ navbar }>
         <button onClick={ onToggleMenuClicked }>
-            <FontAwesomeIcon icon={ faBars } size="2x" fixedWidth/>
+            <FontAwesomeIcon icon={ menuIsOpened ? faTimes : faBars } size="2x" fixedWidth/>
         </button>
-        <h1>{ title }</h1>
+        { children }
         <button onClick={ onToggleContactClicked }>
-            <FontAwesomeIcon icon={ faEnvelope } size="2x" fixedWidth/>
+            <FontAwesomeIcon icon={ contactIsOpened ? faTimes : faEnvelope } size="2x" fixedWidth/>
         </button>
     </div>
 }
@@ -52,14 +59,10 @@ const NavigationBar = ({
 type INavigationListProps = {
     children: React.ReactNode
     isOpened: boolean
-    onCloseClicked: () => void
 }
 
-const NavigationList = ({ isOpened, children, onCloseClicked }: INavigationListProps) => {
+const NavigationList = ({ isOpened, children }: INavigationListProps) => {
     return <div className={[navlinks, isOpened ? active : ""].join(" ")}>
-        <button onClick={ onCloseClicked }>
-            <FontAwesomeIcon icon={ faXmark } size="3x" fixedWidth/>
-        </button>
         { children }
     </div>
 }
@@ -74,16 +77,33 @@ const Navigation = ({ title }: INavigationProps) => {
     const [siteLinksActive, setSiteLinksActive] = React.useState(false)
     const [socialLinksActive, setSocialLinksActive] = React.useState(false)
 
+    const toggleSiteLinks = () => {
+        if (siteLinksActive) {
+            setSiteLinksActive(false)
+        } else {
+            setSiteLinksActive(true)
+            setSocialLinksActive(false)
+        }
+    }
+
+    const toggleSocialLinks = () => {
+        if (socialLinksActive) {
+            setSocialLinksActive(false)
+        } else {
+            setSiteLinksActive(false)
+            setSocialLinksActive(true)
+        }
+    }
+
     return <nav className={ `${isOpened ? active : ""}` }>
         <NavigationBar
-            title={ title }
-            onToggleMenuClicked={ () => setSiteLinksActive(true) }
-            onToggleContactClicked={ () => setSocialLinksActive(true) }
-        />
+            menuIsOpened={ siteLinksActive }
+            onToggleMenuClicked={ toggleSiteLinks }
+            contactIsOpened={ socialLinksActive }
+            onToggleContactClicked={ toggleSocialLinks }
+        ><h1>{ title }</h1></NavigationBar>
 
-        <NavigationList
-            isOpened={ siteLinksActive }
-            onCloseClicked={ () => setSiteLinksActive(false) }>
+        <NavigationList isOpened={ siteLinksActive }>
             <ul id={ siteLinks }>
                 <li>
                     <Link to="/">Home</Link>
@@ -97,18 +117,16 @@ const Navigation = ({ title }: INavigationProps) => {
             </ul>
         </NavigationList>
 
-        <NavigationList
-            isOpened={ socialLinksActive }
-            onCloseClicked={ () => setSocialLinksActive(false) }>
+        <NavigationList isOpened={ socialLinksActive }>
             <ul id={ socialLinks }>
                 <li>
                     <a href="https://github.com/NealRame" target="_blank">
-                        <FontAwesomeIcon icon={ faGithubAlt } fixedWidth/>
+                        <FontAwesomeIcon icon={ faGithubAlt } size="2x" fixedWidth/>
                     </a>
                 </li>
                 <li>
                     <a href="https://twitter.com/NealRame" target="_blank">
-                        <FontAwesomeIcon icon={ faTwitter } fixedWidth/>
+                        <FontAwesomeIcon icon={ faTwitter } size="2x" fixedWidth/>
                     </a>
                 </li>
             </ul>
