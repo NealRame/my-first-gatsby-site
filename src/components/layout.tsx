@@ -46,11 +46,19 @@ const NavigationBar = ({
 }: INavigationBarProps) => {
     return <div className={ navbar }>
         <button onClick={ onToggleMenuClicked }>
-            <FontAwesomeIcon icon={ menuIsOpened ? faXmark : faBars } size="2x" fixedWidth/>
+            <FontAwesomeIcon 
+                icon={ menuIsOpened ? faXmark : faBars }
+                size="2x"
+                fixedWidth
+            />
         </button>
         { children }
         <button onClick={ onToggleContactClicked }>
-            <FontAwesomeIcon icon={ contactIsOpened ? faXmark : faEnvelope } size="2x" fixedWidth/>
+            <FontAwesomeIcon
+                icon={ contactIsOpened ? faXmark : faEnvelope }
+                size="2x"
+                fixedWidth
+            />
         </button>
     </div>
 }
