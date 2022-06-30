@@ -12,6 +12,7 @@ import {
 
 import {
     faGithubAlt,
+    faInstagram,
     faTwitter,
 } from "@fortawesome/free-brands-svg-icons"
 
@@ -129,6 +130,11 @@ const Navigation = ({ title }: INavigationProps) => {
                 <li>
                     <a href="https://github.com/NealRame" target="_blank">
                         <FontAwesomeIcon icon={ faGithubAlt } size="2x" fixedWidth/>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/nealrame/" target="_blank">
+                        <FontAwesomeIcon icon={ faInstagram } size="2x" fixedWidth/>
                     </a>
                 </li>
                 <li>
