@@ -26,6 +26,7 @@ function delay(action: CallableFunction, ms: number) {
 }
 
 const Typewriter = (props: ITypewriterProps) => {
+    const messages = typeof(props.messages) === "string" ? [props.messages] : props.messages
     const {
         erasingSpeed,
         typingSpeed,
@@ -38,8 +39,6 @@ const Typewriter = (props: ITypewriterProps) => {
         typingPause: 2000,
         ...props,
     }
-
-    const messages = typeof(props.messages) === "string" ? [props.messages] : props.messages
 
     const [mode, setMode] = React.useState(TypewriterState.Erasing)
     const [currentTextIndex, setCurrentTextIndex] = React.useState(-1)
