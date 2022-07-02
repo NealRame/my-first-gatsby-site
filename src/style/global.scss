@@ -1,9 +1,10 @@
 @import "./variables.scss";
+@import "./mixins.scss";
 
 html {
     font-size: 18px;
 
-    @media screen and (min-width: 768px) {
+    @include media-min(medium) {
         font-size: 21px;
     }
 }

@@ -1,6 +1,15 @@
+// Breakpoints
+
+$breakpoints: (
+    small: 640px,
+    medium: 768px,
+    large: 1024px,
+    xlarge: 1280px,
+    xxlarge: 1440px,
+);
+
 // Colors
 
-// $color1: #393D40;
 $color1: #0e0f10;
 $color2: #5D6C75;
 $color3: #FEFBEE;

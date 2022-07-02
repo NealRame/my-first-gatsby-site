@@ -1,3 +1,4 @@
+@import "../style/mixins.scss";
 @import "../style/variables.scss";
 
 #content {
@@ -33,7 +34,16 @@
 
                 cursor: pointer;
 
+                outline: none;
+
                 padding: 0;
+
+                &:focus {
+                    color: $link-color;
+                }
+                &:hover {
+                    color: $link-color;
+                }
             }
 
             & > .navbar {
@@ -115,14 +125,14 @@
         }
     }
 
-    & > footer {
-        border-top: 1px solid $border-color;
+    & > main {
+        margin: 0 auto;
+        padding: 0 8px;
 
-        color: $color2;
+        max-width: map-get($map: $breakpoints, $key: small);
 
-        font-size: .75rem;
-
-        padding: 1rem;
-        padding-top: .25rem;
+        @include media-min(medium) {
+            max-width: map-get($map: $breakpoints, $key: medium);
+        }
     }
 }
