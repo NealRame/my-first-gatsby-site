@@ -147,7 +147,7 @@ const Navigation = ({ title }: INavigationProps) => {
     </nav>
 }
 
-const Layout = ({ pageTitle, children }: ILayoutData) => {
+const Layout = ({ children, pageTitle }: ILayoutData) => {
     const { site: { siteMetadata: { title } }} = useStaticQuery(graphql`
         query {
             site {

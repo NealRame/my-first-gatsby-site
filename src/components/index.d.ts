@@ -2,8 +2,8 @@ declare module "*.css"
 declare module "*.scss"
 
 interface ILayoutData {
-    pageTitle: string
     children: React.ReactNode
+    pageTitle: string
 }
 
 interface IBlogPostEntryData {
