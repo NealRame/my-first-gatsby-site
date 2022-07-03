@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "./mixins.scss";
+@import "./variables";
+@import "./mixins";
 
 html {
     font-size: 18px;
@@ -23,11 +23,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     color: $header-color;
+
     font-family: "Montserrat", sans-serif;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 a {
     color: $link-color;
+
     text-decoration: none;
 }

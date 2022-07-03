@@ -22,8 +22,6 @@
 
             grid-template-rows: min-content 100fr;
 
-            font-family: lores-12, sans-serif;
-
             width: 100vw;
 
             button {
@@ -95,6 +93,7 @@
                     justify-content: center;
                     gap: 1rem;
 
+                    font-family: lores-12, sans-serif;
                     font-size: 2rem;
                     font-weight: 900;
 
