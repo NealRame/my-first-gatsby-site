@@ -1,5 +1,5 @@
-@import "../style/mixins.scss";
-@import "../style/variables.scss";
+@import "../style/mixins";
+@import "../style/variables";
 
 #content {
     background-color: $background-color;
@@ -58,6 +58,9 @@
 
                 & > h1 {
                     background-color: transparent;
+
+                    color: $color5;
+
                     font-family: lores-9-wide, sans-serif;
                     font-size: 2rem;
                     font-weight: 900;
@@ -88,8 +91,8 @@
                 & > ul {
                     display: flex;
                     align-content: center;
-                    justify-content: center;
                     align-items: center;
+                    justify-content: center;
                     gap: 1rem;
 
                     font-size: 2rem;
@@ -112,12 +115,12 @@
                     }
 
                     & > li > a {
-                        color: $color3;
+                        color: $foreground-color;
+
                         text-transform: uppercase;
+
                         &:hover {
-                            text-shadow:
-                                0 0 2px $color3,
-                                0 0 12px $color3;
+                            @include glow($foreground-color, 4);
                         }
                     }
                 }
