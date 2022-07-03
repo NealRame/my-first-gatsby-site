@@ -129,12 +129,16 @@
 
     & > main {
         margin: 0 auto;
-        padding: 0 8px;
+        padding: 0 1rem;
 
-        max-width: map-get($map: $breakpoints, $key: small);
-
+        @include media-min(small) {
+            width: map-get($map: $breakpoints, $key: small);
+        }
         @include media-min(medium) {
-            max-width: map-get($map: $breakpoints, $key: medium);
+            width: map-get($map: $breakpoints, $key: medium);
+        }
+        @include media-min(large) {
+            width: map-get($map: $breakpoints, $key: large);
         }
     }
 }
