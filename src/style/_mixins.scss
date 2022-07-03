@@ -1,4 +1,24 @@
+@use "sass:list";
+@use "sass:math";
+@use "sass:meta";
+
 @import "./variables.scss";
+
+@function _glow($color, $steps) {
+    $text-shadow-list: ();
+    @for $i from 1 through $steps {
+        $text-shadow-list: list.append(
+            $text-shadow-list,
+            #{"0 0 " + math.pow(2, 2*$i) + "px " + $color},
+            $separator: comma,
+        );
+    }
+    @return $text-shadow-list;
+}
+
+@mixin glow($color, $steps: 3) {
+    text-shadow: _glow($color, $steps);
+}
 
 @mixin media-min($_key) {
     @media screen and (min-width: map-get($breakpoints, $_key)) {
