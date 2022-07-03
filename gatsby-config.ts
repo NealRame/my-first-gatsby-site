@@ -9,6 +9,12 @@ const config: GatsbyConfig = {
   },
   plugins: [
     "gatsby-plugin-image",
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        icon: "src/images/icon.png",
+      },
+    },
     "gatsby-plugin-mdx",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sass",
