@@ -1,0 +1,20 @@
+@import "./variables";
+
+.page-404-content {
+    color: $color4;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        color: inherit;
+
+        font-family: lores-9-wide, sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+}

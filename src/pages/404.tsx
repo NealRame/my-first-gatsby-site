@@ -1,34 +1,21 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import {
+    faGhost,
+} from "@fortawesome/free-solid-svg-icons"
 
 import Layout from "../components/layout"
 
-// styles
-const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
+import "../style/404.scss"
 
 const NotFoundPage = () => {
     return (
         <Layout pageTitle="404 Not Found">
+            <div className="page-404-content">
+                <FontAwesomeIcon icon={ faGhost } size="10x" />
+                <h1>Page Not Found</h1>
+            </div>
         </Layout>
     )
 }
