@@ -80,8 +80,6 @@ type INavigationProps = {
 }
 
 const Navigation = ({ title }: INavigationProps) => {
-    const [ isOpened, setIsOpened] = React.useState(false)
-
     const [siteLinksActive, setSiteLinksActive] = React.useState(false)
     const [socialLinksActive, setSocialLinksActive] = React.useState(false)
 
@@ -103,7 +101,17 @@ const Navigation = ({ title }: INavigationProps) => {
         }
     }
 
-    return <nav className={ `${isOpened ? active : ""}` }>
+    const mode = () => {
+        if (siteLinksActive) {
+            return "site"
+        }
+        if (socialLinksActive) {
+            return "social"
+        }
+        return "none"
+    }
+
+    return <nav className={(siteLinksActive || socialLinksActive) ? active : ""}>
         <NavigationBar
             menuIsOpened={ siteLinksActive }
             onToggleMenuClicked={ toggleSiteLinks }

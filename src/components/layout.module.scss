@@ -66,8 +66,6 @@
                     margin: 0;
 
                     text-align: center;
-
-                    transition: opacity 256ms ease-in-out;
                 }
             }
 
@@ -123,6 +121,10 @@
                         }
                     }
                 }
+            }
+
+            &.active > .navbar > h1 {
+                color: $foreground-color;
             }
         }
     }
