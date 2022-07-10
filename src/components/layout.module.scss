@@ -130,12 +130,13 @@
     }
 
     & > main {
+        box-sizing: border-box;
+
         margin: 0 auto;
         padding: 0 1rem;
 
-        @include media-min(small) {
-            width: map-get($map: $breakpoints, $key: small);
-        }
+        width: 100%;
+
         @include media-min(medium) {
             width: map-get($map: $breakpoints, $key: medium);
         }
