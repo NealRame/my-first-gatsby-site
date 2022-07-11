@@ -128,7 +128,7 @@ const Navigation = ({ title }: INavigationProps) => {
                     <Link to="/about/">About Me</Link>
                 </li>
                 <li>
-                    <Link to="/blog">Blog</Link>
+                    <Link to="/blog/">Blog</Link>
                 </li>
             </ul>
         </NavigationList>
