@@ -101,16 +101,6 @@ const Navigation = ({ title }: INavigationProps) => {
         }
     }
 
-    const mode = () => {
-        if (siteLinksActive) {
-            return "site"
-        }
-        if (socialLinksActive) {
-            return "social"
-        }
-        return "none"
-    }
-
     return <nav className={(siteLinksActive || socialLinksActive) ? active : ""}>
         <NavigationBar
             menuIsOpened={ siteLinksActive }
