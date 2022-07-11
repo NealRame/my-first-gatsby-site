@@ -1,8 +1,13 @@
+import * as React from "react"
+
 import { graphql, Link, useStaticQuery } from "gatsby"
 import { Helmet } from "react-helmet"
 
-import * as React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+    faGithubAlt,
+    faInstagram,
+    faTwitter,
+} from "@fortawesome/free-brands-svg-icons"
 
 import {
     faBars,
@@ -11,10 +16,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
-    faGithubAlt,
-    faInstagram,
-    faTwitter,
-} from "@fortawesome/free-brands-svg-icons"
+    FontAwesomeIcon,
+} from "@fortawesome/react-fontawesome"
 
 import {
     active,
