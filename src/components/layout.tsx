@@ -1,6 +1,6 @@
-import * as React from "react"
-
 import { graphql, Link, useStaticQuery } from "gatsby"
+
+import * as React from "react"
 import { Helmet } from "react-helmet"
 
 import {
