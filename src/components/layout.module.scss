@@ -54,9 +54,7 @@
 
                 z-index: 2;
 
-                & > h1 {
-                    background-color: transparent;
-
+                h1 {
                     color: $color5;
 
                     font-family: lores-9-wide, sans-serif;
@@ -69,62 +67,59 @@
                 }
             }
 
-            & > .navlinks {
-                display: none;
+            ul {
+                display: flex;
+                align-content: center;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
 
-                &.active {
-                    display: block;
+                font-family: lores-12, sans-serif;
+                font-size: 2rem;
+                font-weight: 900;
 
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100vw;
-                    height: 100vh;
+                list-style: none;
 
-                    z-index: 1;
-                }
+                padding: 0;
+                margin: 0;
 
-                & > ul {
-                    display: flex;
-                    align-content: center;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 1rem;
+                min-height: 100vh;
 
-                    font-family: lores-12, sans-serif;
-                    font-size: 2rem;
-                    font-weight: 900;
+                & > li > a {
+                    color: $foreground-color;
 
-                    list-style: none;
+                    text-transform: uppercase;
 
-                    padding: 0;
-                    margin: 0;
-
-                    min-height: 100vh;
-
-                    &#site-links {
-                        background-color: $color2;
-                        flex-direction: column;
-                    }
-                    &#social-links {
-                        background-color: $color5;
-                        flex-direction: row;
-                    }
-
-                    & > li > a {
-                        color: $foreground-color;
-
-                        text-transform: uppercase;
-
-                        &:hover {
-                            @include glow($foreground-color, 4);
-                        }
+                    &:hover {
+                        @include glow($foreground-color, 4);
                     }
                 }
             }
 
-            &.active > .navbar > h1 {
-                color: $foreground-color;
+            & > .navlinks {
+                display: none;
+
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+
+                z-index: 1;
+
+                &.site {
+                    background-color: $color2;
+                    & > ul {
+                        flex-direction: column;
+                    }
+                }
+
+                &.social {
+                    background-color: $color5;
+                    & > ul {
+                        flex-direction: row;
+                    }
+                }
             }
         }
     }

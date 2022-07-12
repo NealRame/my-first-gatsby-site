@@ -20,46 +20,56 @@ import {
 } from "@fortawesome/react-fontawesome"
 
 import {
-    active,
+    FadeOut,
+    Reveal,
+} from "./effects"
+
+import {
     content,
     navbar,
     navlinks,
-    siteLinks,
-    socialLinks,
+    site,
+    social,
 } from "./layout.module.scss"
 
 import "../style/global.scss"
 
 
 type INavigationBarProps = {
-    contactIsOpened: boolean
-    onToggleContactClicked: () => void
+    onSiteLinksMenuButtonClicked: () => void
+    onSocialLinksMenuButtonClicked: () => void
 
-    menuIsOpened: boolean
-    onToggleMenuClicked: () => void
+    siteLinksMenuActive: boolean
+    socialLinksMenuActive: boolean
 
-    children: React.ReactNode
+    title: string
 }
 
 const NavigationBar = ({
-    menuIsOpened,
-    onToggleMenuClicked,
-    contactIsOpened,
-    onToggleContactClicked,
-    children,
+    onSiteLinksMenuButtonClicked,
+    onSocialLinksMenuButtonClicked,
+    siteLinksMenuActive,
+    socialLinksMenuActive,
+    title,
 }: INavigationBarProps) => {
+    const duration = 300
+
     return <div className={ navbar }>
-        <button onClick={ onToggleMenuClicked }>
+        <button onClick={ onSiteLinksMenuButtonClicked }>
             <FontAwesomeIcon
-                icon={ menuIsOpened ? faXmark : faBars }
+                icon={ siteLinksMenuActive ? faXmark : faBars }
                 size="2x"
                 fixedWidth
             />
         </button>
-        { children }
-        <button onClick={ onToggleContactClicked }>
+        <FadeOut
+            duration={ duration }
+            enter={ siteLinksMenuActive || socialLinksMenuActive }>
+            <h1>{ title }</h1>
+        </FadeOut>
+        <button onClick={ onSocialLinksMenuButtonClicked }>
             <FontAwesomeIcon
-                icon={ contactIsOpened ? faXmark : faEnvelope }
+                icon={ socialLinksMenuActive ? faXmark : faEnvelope }
                 size="2x"
                 fixedWidth
             />
@@ -69,13 +79,25 @@ const NavigationBar = ({
 
 type INavigationListProps = {
     children: React.ReactNode
+    onActivated: () => void
+    onDeactivated: () => void
     isOpened: boolean
+    menu: "site" | "social"
 }
 
-const NavigationList = ({ isOpened, children }: INavigationListProps) => {
-    return <div className={[navlinks, isOpened ? active : ""].join(" ")}>
-        { children }
-    </div>
+const NavigationList = ({
+    children,
+    isOpened,
+    menu,
+}: INavigationListProps) => {
+    const duration = 300;
+    const menuClass = { site, social }
+
+    return <Reveal
+        duration={ duration }
+        enter={ isOpened }
+        classNames={ [navlinks, menuClass[menu]] }
+    >{ children }</Reveal>
 }
 
 type INavigationProps = {
@@ -104,16 +126,22 @@ const Navigation = ({ title }: INavigationProps) => {
         }
     }
 
-    return <nav className={(siteLinksActive || socialLinksActive) ? active : ""}>
+    return <nav>
         <NavigationBar
-            menuIsOpened={ siteLinksActive }
-            onToggleMenuClicked={ toggleSiteLinks }
-            contactIsOpened={ socialLinksActive }
-            onToggleContactClicked={ toggleSocialLinks }
-        ><h1>{ title }</h1></NavigationBar>
+            onSiteLinksMenuButtonClicked={ toggleSiteLinks }
+            onSocialLinksMenuButtonClicked={ toggleSocialLinks }
+            siteLinksMenuActive={ siteLinksActive }
+            socialLinksMenuActive={ socialLinksActive }
+            title={ title }
+        />
 
-        <NavigationList isOpened={ siteLinksActive }>
-            <ul id={ siteLinks }>
+        <NavigationList
+            isOpened={ siteLinksActive }
+            menu="site"
+            onActivated={ () => {} }
+            onDeactivated={ () => {} }
+        >
+            <ul>
                 <li>
                     <Link to="/">Home</Link>
                 </li>
@@ -126,8 +154,13 @@ const Navigation = ({ title }: INavigationProps) => {
             </ul>
         </NavigationList>
 
-        <NavigationList isOpened={ socialLinksActive }>
-            <ul id={ socialLinks }>
+        <NavigationList
+            isOpened={ socialLinksActive }
+            menu="social"
+            onActivated={ () => {} }
+            onDeactivated={ () => {} }
+        >
+            <ul>
                 <li>
                     <a href="https://github.com/NealRame" target="_blank">
                         <FontAwesomeIcon icon={ faGithubAlt } size="2x" fixedWidth/>
