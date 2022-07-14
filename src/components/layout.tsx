@@ -20,11 +20,6 @@ import {
 } from "@fortawesome/react-fontawesome"
 
 import {
-    FadeOut,
-    Reveal,
-} from "./effects"
-
-import {
     content,
     navbar,
     navlinks,
@@ -32,28 +27,35 @@ import {
     social,
 } from "./layout.module.scss"
 
+import {
+    FadeOut,
+    FadeIn,
+    Reveal,
+} from "./effects"
+
 import "../style/global.scss"
 
 
 type INavigationBarProps = {
+    children: React.ReactNode
+
+    duration: number
+
     onSiteLinksMenuButtonClicked: () => void
     onSocialLinksMenuButtonClicked: () => void
 
     siteLinksMenuActive: boolean
     socialLinksMenuActive: boolean
-
-    title: string
 }
 
 const NavigationBar = ({
+    children,
+    duration,
     onSiteLinksMenuButtonClicked,
     onSocialLinksMenuButtonClicked,
     siteLinksMenuActive,
     socialLinksMenuActive,
-    title,
 }: INavigationBarProps) => {
-    const duration = 300
-
     return <div className={ navbar }>
         <button onClick={ onSiteLinksMenuButtonClicked }>
             <FontAwesomeIcon
@@ -64,9 +66,8 @@ const NavigationBar = ({
         </button>
         <FadeOut
             duration={ duration }
-            enter={ siteLinksMenuActive || socialLinksMenuActive }>
-            <h1>{ title }</h1>
-        </FadeOut>
+            enter={ siteLinksMenuActive || socialLinksMenuActive}
+        >{ children }</FadeOut>
         <button onClick={ onSocialLinksMenuButtonClicked }>
             <FontAwesomeIcon
                 icon={ socialLinksMenuActive ? faXmark : faEnvelope }
@@ -79,24 +80,22 @@ const NavigationBar = ({
 
 type INavigationListProps = {
     children: React.ReactNode
-    onActivated: () => void
-    onDeactivated: () => void
     isOpened: boolean
+    duration: number
     menu: "site" | "social"
 }
 
 const NavigationList = ({
     children,
     isOpened,
+    duration,
     menu,
 }: INavigationListProps) => {
-    const duration = 300;
-    const menuClass = { site, social }
-
     return <Reveal
-        duration={ duration }
+        classNames={ [navlinks] }
         enter={ isOpened }
-        classNames={ [navlinks, menuClass[menu]] }
+        id={ menu === "site" ? site : social }
+        duration={ duration }
     >{ children }</Reveal>
 }
 
@@ -126,20 +125,25 @@ const Navigation = ({ title }: INavigationProps) => {
         }
     }
 
+    const menuMode = () => {
+        if (siteLinksActive) return "site"
+        if (socialLinksActive) return "social"
+        return ""
+    }
+
     return <nav>
         <NavigationBar
+            duration={ 400 }
             onSiteLinksMenuButtonClicked={ toggleSiteLinks }
             onSocialLinksMenuButtonClicked={ toggleSocialLinks }
             siteLinksMenuActive={ siteLinksActive }
             socialLinksMenuActive={ socialLinksActive }
-            title={ title }
-        />
+        ><h1>{ title }</h1></NavigationBar>
 
         <NavigationList
+            duration={ 400 }
             isOpened={ siteLinksActive }
             menu="site"
-            onActivated={ () => {} }
-            onDeactivated={ () => {} }
         >
             <ul>
                 <li>
@@ -155,10 +159,9 @@ const Navigation = ({ title }: INavigationProps) => {
         </NavigationList>
 
         <NavigationList
+            duration={ 400 }
             isOpened={ socialLinksActive }
             menu="social"
-            onActivated={ () => {} }
-            onDeactivated={ () => {} }
         >
             <ul>
                 <li>

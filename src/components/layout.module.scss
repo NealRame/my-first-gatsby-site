@@ -67,57 +67,56 @@
                 }
             }
 
-            ul {
-                display: flex;
-                align-content: center;
-                align-items: center;
-                justify-content: center;
-                gap: 1rem;
-
-                font-family: lores-12, sans-serif;
-                font-size: 2rem;
-                font-weight: 900;
-
-                list-style: none;
-
-                padding: 0;
-                margin: 0;
-
-                min-height: 100vh;
-
-                & > li > a {
-                    color: $foreground-color;
-
-                    text-transform: uppercase;
-
-                    &:hover {
-                        @include glow($foreground-color, 4);
-                    }
-                }
-            }
-
             & > .navlinks {
-                display: none;
-
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100vw;
                 height: 100vh;
 
-                z-index: 1;
+                opacity: 0;
+                z-index: -1;
 
-                &.site {
+                &#site {
                     background-color: $color2;
                     & > ul {
                         flex-direction: column;
                     }
                 }
 
-                &.social {
+                &#social {
                     background-color: $color5;
                     & > ul {
                         flex-direction: row;
+                    }
+                }
+
+                ul {
+                    display: flex;
+                    align-content: center;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1rem;
+
+                    font-family: lores-12, sans-serif;
+                    font-size: 2rem;
+                    font-weight: 900;
+
+                    list-style: none;
+
+                    padding: 0;
+                    margin: 0;
+
+                    min-height: 100vh;
+
+                    & > li > a {
+                        color: $foreground-color;
+
+                        text-transform: uppercase;
+
+                        &:hover {
+                            @include glow($foreground-color, 4);
+                        }
                     }
                 }
             }
