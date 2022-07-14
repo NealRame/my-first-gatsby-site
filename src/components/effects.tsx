@@ -3,28 +3,39 @@ import {
     Transition,
 } from "react-transition-group"
 
-type IFXTransitions = {
-    enter: Record<string, unknown>
-    entering: Record<string, unknown>
-    entered: Record<string, unknown>
+type ITransitionConfig = {
+    enter?: Record<string, unknown>
+    entering?: Record<string, unknown>
+    entered?: Record<string, unknown>
 
-    exit: Record<string, unknown>
-    exiting: Record<string, unknown>
-    exited: Record<string, unknown>
+    exit?: Record<string, unknown>
+    exiting?: Record<string, unknown>
+    exited?: Record<string, unknown>
+
+    enteringEasing?: string
+    exitingEasing?: string
+
+    properties?: Array<string> | string
 }
 
-const FXTransitionsDefaults = {
+const TransitionConfigDefault = {
     enter: {},
     entering: {},
     entered: {},
+    
     exit: {},
     exiting: {},
     exited: {},
+
+    enteringEasing: "ease-in-out",
+    exitingEasing: "ease-in-out",
+
+    properties: "all",
 }
 
-type IFXProps = {
+type ITransitionProps = {
     children: React.ReactNode
-    delay?: number
+    delay?: number,
     duration?: number,
     enter: boolean
     id?: string,
@@ -34,45 +45,82 @@ type IFXProps = {
     log?: boolean
 }
 
-const FXDefaults = {
+const TransitionPropsDefaults = {
+    classNames: [],
     delay: 0,
     duration: 300,
-    classNames: [],
     onEntered: () => {},
     onExited: () => {},
     log: false,
 }
 
-export const createRevealFX = (
-    transitions: IFXTransitions
-) => {
-    transitions = { ...FXTransitionsDefaults, ...transitions }
-    return ({ enter, children, ...props }: IFXProps) => {
-        const [style, setStyle] = React.useState({})
+function createCSSTransitionProperty(
+    properties: Array<string>,
+    duration: number,
+    delay: number,
+    easing: string,
+): { transition: string } {
+    return {
+        transition: properties.map(
+            prop => `${prop} ${duration}ms ${easing} ${delay}ms`
+        ).join(", "),
+    }
+}
 
-        const { duration, onEntered, onExited, log: verbose } = {
-            ...FXDefaults,
+function createCSSTransitionProperties(
+    properties: Array<string> | string,
+    duration: number,
+    delay: number,
+    enteringEasing: string,
+    exitingEasing: string,
+): [{ transition: string }, { transition: string }] {
+    return typeof properties === "string"
+        ? createCSSTransitionProperties([properties], duration, delay, enteringEasing, exitingEasing)
+        : [enteringEasing, exitingEasing].map(easing => {
+            return createCSSTransitionProperty(properties, duration, delay, easing)
+        }) as [{ transition: string }, { transition: string }]
+}
+
+export const createTransition = (config: ITransitionConfig) => {
+    const {
+        properties,
+        enteringEasing,
+        exitingEasing,
+        ...transitions
+    } = {
+        ...TransitionConfigDefault,
+        ...config,
+    } as Required<ITransitionConfig>
+
+    return ({ children, enter, ...props }: ITransitionProps) => {
+        const [style, setStyle] = React.useState({})
+        const { delay, duration, onEntered, onExited, log: verbose } = {
+            ...TransitionPropsDefaults,
             ...props
         }
 
         const classNames = (props.classNames ?? []).join(" ")
-        const cssTransition = {
-            transition: `opacity ${duration}ms ease-in-out`,
-        }
+        const [
+            enteringCSSTransitions,
+            exitingCSSTransitions,
+        ] = createCSSTransitionProperties(
+            properties,
+            duration,
+            delay,
+            enteringEasing,
+            exitingEasing
+        )
 
         return <Transition
             in={ enter }
             timeout={ duration }
-            onEnter={ (node: HTMLElement) => {
+            onEnter={ () => {
                 const style = { ...transitions.enter }
-                if (verbose) {
-                    console.log("onEnter", transitions.enter, node)
-                }
                 setStyle(style)
-            }}
+            } }
             onEntering={ () => {
                 const style = {
-                    ...cssTransition,
+                    ...enteringCSSTransitions,
                     ...transitions.enter,
                     ...transitions.entering
                 }
@@ -80,28 +128,25 @@ export const createRevealFX = (
                     console.log("onEntering", style)
                 }
                 setStyle(style)
-            }}
-            onEntered={() => {
+            } }
+            onEntered={ () => {
                 const style = {
                     ...transitions.enter,
                     ...transitions.entered
                 }
-                if (verbose) {
-                    console.log("onEntered", style)
-                }
                 setStyle(style)
                 onEntered()
-            }}
-            onExit={() => {
+            } }
+            onExit={ () => {
                 const style = { ...transitions.exit }
                 if (verbose) {
                     console.log("onExit", style)
                 }
                 setStyle(style)
-            }}
-            onExiting={() => {
+            } }
+            onExiting={ () => {
                 const style = {
-                    ...cssTransition,
+                    ...exitingCSSTransitions,
                     ...transitions.exit,
                     ...transitions.exiting
                 }
@@ -109,8 +154,8 @@ export const createRevealFX = (
                     console.log("onExit", style)
                 }
                 setStyle(style)
-            }}
-            onExited={() => {
+            } }
+            onExited={ () => {
                 const style = {
                     ...transitions.exit,
                     ...transitions.exited
@@ -120,7 +165,7 @@ export const createRevealFX = (
                 }
                 setStyle(style)
                 onExited()
-            }}
+            } }
         ><div
             className={ classNames }
             id={ props.id }
@@ -129,8 +174,8 @@ export const createRevealFX = (
     }
 }
 
-const FadeInTransitions: IFXTransitions = {
-    ...FXTransitionsDefaults,
+const FadeInTransitions: ITransitionConfig = {
+    ...TransitionConfigDefault,
     entering: {
         opacity: 0,
     },
@@ -143,10 +188,11 @@ const FadeInTransitions: IFXTransitions = {
     exited: {
         opacity: 0,
     },
+    properties: "opacity",
 }
 
-const FadeOutTransitions: IFXTransitions = {
-    ...FXTransitionsDefaults,
+const FadeOutTransitions: ITransitionConfig = {
+    ...TransitionConfigDefault,
     entering: {
         opacity: 0,
     },
@@ -159,10 +205,11 @@ const FadeOutTransitions: IFXTransitions = {
     exited: {
         opacity: 1,
     },
+    properties: "opacity",
 }
 
-const RevealTransitions: IFXTransitions = {
-    ...FXTransitionsDefaults,
+const RevealTransitions: ITransitionConfig = {
+    ...TransitionConfigDefault,
     enter: {
         zIndex: 1,
     },
@@ -178,9 +225,10 @@ const RevealTransitions: IFXTransitions = {
     exited: {
         zIndex: -1,
     },
+    properties: "opacity",
 }
 
-export const FadeIn = createRevealFX(FadeInTransitions)
-export const FadeOut = createRevealFX(FadeOutTransitions)
-export const Reveal = createRevealFX(RevealTransitions)
+export const FadeIn = createTransition(FadeInTransitions)
+export const FadeOut = createTransition(FadeOutTransitions)
+export const Reveal = createTransition(RevealTransitions)
 
