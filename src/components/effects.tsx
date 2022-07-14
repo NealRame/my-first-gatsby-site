@@ -116,6 +116,9 @@ export const createTransition = (config: ITransitionConfig) => {
             timeout={ duration }
             onEnter={ () => {
                 const style = { ...transitions.enter }
+                if (verbose) {
+                    console.log("onEnter", style)
+                }
                 setStyle(style)
             } }
             onEntering={ () => {
@@ -133,6 +136,9 @@ export const createTransition = (config: ITransitionConfig) => {
                 const style = {
                     ...transitions.enter,
                     ...transitions.entered
+                }
+                if (verbose) {
+                    console.log("onEntered", style)
                 }
                 setStyle(style)
                 onEntered()
@@ -175,7 +181,6 @@ export const createTransition = (config: ITransitionConfig) => {
 }
 
 const FadeInTransitions: ITransitionConfig = {
-    ...TransitionConfigDefault,
     entering: {
         opacity: 0,
     },
@@ -192,7 +197,6 @@ const FadeInTransitions: ITransitionConfig = {
 }
 
 const FadeOutTransitions: ITransitionConfig = {
-    ...TransitionConfigDefault,
     entering: {
         opacity: 0,
     },
@@ -209,7 +213,6 @@ const FadeOutTransitions: ITransitionConfig = {
 }
 
 const RevealTransitions: ITransitionConfig = {
-    ...TransitionConfigDefault,
     enter: {
         zIndex: 1,
     },
@@ -228,7 +231,23 @@ const RevealTransitions: ITransitionConfig = {
     properties: "opacity",
 }
 
+const SlideUpTransitions: ITransitionConfig = {
+    enter: {
+        transform: "translateY(-100%)",
+    },
+    entering: {
+        transform: "translateY(0)",
+    },
+    entered: {
+        transform: "translateY(0)",
+    },
+    exiting: {
+        transform: "translateY(-100%)",
+    },
+    properties: "transform",
+}
+
 export const FadeIn = createTransition(FadeInTransitions)
 export const FadeOut = createTransition(FadeOutTransitions)
 export const Reveal = createTransition(RevealTransitions)
-
+export const SlideUp = createTransition(SlideUpTransitions)
