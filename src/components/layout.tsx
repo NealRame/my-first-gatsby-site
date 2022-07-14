@@ -29,7 +29,6 @@ import {
 
 import {
     FadeOut,
-    FadeIn,
     Reveal,
 } from "./effects"
 
@@ -123,12 +122,6 @@ const Navigation = ({ title }: INavigationProps) => {
             setSiteLinksActive(false)
             setSocialLinksActive(true)
         }
-    }
-
-    const menuMode = () => {
-        if (siteLinksActive) return "site"
-        if (socialLinksActive) return "social"
-        return ""
     }
 
     return <nav>
