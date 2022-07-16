@@ -1,4 +1,4 @@
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import * as React from "react"
 
 import ArticleEntry from "../../components/article"
