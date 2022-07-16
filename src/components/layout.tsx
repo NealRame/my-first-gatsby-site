@@ -135,7 +135,7 @@ const Navigation = ({ title }: INavigationProps) => {
         ><h1>{ title }</h1></NavigationBar>
 
         <NavigationList
-            duration={ 1000 }
+            duration={ 400 }
             isOpened={ siteLinksActive }
             menu="site"
         >
