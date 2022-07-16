@@ -35,7 +35,6 @@ import {
 
 import "../style/global.scss"
 
-
 type INavigationBarProps = {
     children: React.ReactNode
 
