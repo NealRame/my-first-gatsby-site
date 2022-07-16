@@ -1,14 +1,14 @@
 import { graphql } from "gatsby"
 import * as React from "react"
 
-import ArticleEntry from "../../components/article"
+import Post from "../../components/post"
 import Layout from "../../components/layout"
 
 const BlogPage = ({ data }: IBlogPostsQueryData) => (
     <Layout pageTitle="My Blog Posts">
         <h1>Blog</h1>
         {data.allMdx.nodes.map(node => (
-            <ArticleEntry post={ node } key={ node.id }/>
+            <Post post={ node } key={ node.id }/>
         ))}
     </Layout>
 )
