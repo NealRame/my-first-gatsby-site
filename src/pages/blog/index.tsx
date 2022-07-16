@@ -1,8 +1,8 @@
 import { graphql, Link } from "gatsby"
 import * as React from "react"
 
-import Layout from "../../components/layout"
 import ArticleEntry from "../../components/article"
+import Layout from "../../components/layout"
 
 const BlogPage = ({ data }: IBlogPostsQueryData) => (
     <Layout pageTitle="My Blog Posts">
