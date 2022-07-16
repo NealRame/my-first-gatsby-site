@@ -38,8 +38,6 @@ type ITransitionProps = {
     delay?: number,
     duration?: number,
     enter: boolean
-    id?: string,
-    classNames?: Array<string>
     onEntered?: () => void
     onExited?: () => void
     log?: boolean
@@ -99,7 +97,6 @@ export const createTransition = (config: ITransitionConfig) => {
             ...props
         }
 
-        const classNames = (props.classNames ?? []).join(" ")
         const [
             enteringCSSTransitions,
             exitingCSSTransitions,
@@ -172,11 +169,17 @@ export const createTransition = (config: ITransitionConfig) => {
                 setStyle(style)
                 onExited()
             } }
-        ><div
-            className={ classNames }
-            id={ props.id }
-            style={ style }
-        >{ children }</div></Transition>
+        >{() => {
+            if (React.isValidElement(children)) {
+                const childstyle = { ...children.props.style, ...style }
+                return React.cloneElement(
+                    React.Children.only(children),
+                    { style: childstyle }
+                )
+            }
+            throw new Error("Transition: children must be a valid React element")
+        }}
+        </Transition>
     }
 }
 

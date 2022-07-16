@@ -30,6 +30,7 @@ import {
 import {
     FadeOut,
     Reveal,
+    SlideUp,
 } from "./effects"
 
 import "../style/global.scss"
@@ -91,11 +92,11 @@ const NavigationList = ({
     menu,
 }: INavigationListProps) => {
     return <Reveal
-        classNames={ [navlinks] }
         enter={ isOpened }
-        id={ menu === "site" ? site : social }
         duration={ duration }
-    >{ children }</Reveal>
+    ><div id={ menu === "site" ? site : social } className={ navlinks }>
+        { children }
+    </div></Reveal>
 }
 
 type INavigationProps = {
@@ -134,7 +135,7 @@ const Navigation = ({ title }: INavigationProps) => {
         ><h1>{ title }</h1></NavigationBar>
 
         <NavigationList
-            duration={ 400 }
+            duration={ 1000 }
             isOpened={ siteLinksActive }
             menu="site"
         >
