@@ -1,16 +1,24 @@
 import { Link } from "gatsby"
-import * as React from 'react'
 
-import {
-    postEntry,
-} from "./post.module.scss"
+import * as React from "react"
+import { createUseStyles } from "react-jss"
 
 type IPostProps = {
     post: IBlogPostEntryData
 }
 
+const useStyles = createUseStyles({
+    postEntry: {
+        h2: {
+            marginBottom: 0,
+            paddingBottom: 0,
+        },
+    },
+})
+
 const Post = ({ post }: IPostProps) => {
-    return <article className={ postEntry } key={ post.id }>
+    const classes = useStyles()
+    return <article className={ classes.postEntry } key={ post.id }>
         <h2>
             <Link to={ `/blog/${post.slug}` }>
                 { post.frontmatter.title }

@@ -9,25 +9,23 @@ const config: GatsbyConfig = {
   },
   plugins: [
     "gatsby-plugin-image",
+    "gatsby-plugin-jss",
+    "gatsby-plugin-mdx",
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-sharp",
     {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/icon.png",
       },
-    },
-    "gatsby-plugin-mdx",
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-sass",
-    "gatsby-plugin-sharp",
-    {
+    }, {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
         typekit: {
           id: process.env.TYPEKIT_ID,
         }
       }
-    },
-    {
+    }, {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "blog",

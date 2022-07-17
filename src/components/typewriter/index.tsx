@@ -1,9 +1,17 @@
 import * as React from "react"
+import { createUseStyles } from "react-jss"
 
-import {
-    typewriter,
-    typewriterLine,
-} from "./typewriter.module.scss"
+// import {
+//     typewriter,
+//     typewriterLine,
+// } from "./typewriter.module.scss"
+
+const useStyles = createUseStyles({
+    typewriter: {
+    },
+    typewriterLine: {
+    },
+})
 
 type ITypewriterProps = {
     messages: string | Array<string>
@@ -74,9 +82,11 @@ const Typewriter = (props: ITypewriterProps) => {
         return delay(toggleMode, typingPause)
     })
 
+    const classes = useStyles()
+
     return (
-        <div className={ typewriter }>
-            <span className={ typewriterLine }>{ buffer }</span>
+        <div className={ classes.typewriter }>
+            <span className={ classes.typewriterLine }>{ buffer }</span>
         </div>
     )
 }
